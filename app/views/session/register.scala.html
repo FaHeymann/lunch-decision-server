@@ -1,0 +1,68 @@
+@(form: Form[SessionController.Registration])
+
+@formError(form: Form[SessionController.Registration], field: String) = {
+    @if(form.hasGlobalErrors() && form.globalError.message.startsWith(field)) {
+        has-error
+    }
+}
+
+@formErrorText(form: Form[SessionController.Registration], field: String) = {
+    @if(form.hasGlobalErrors() && form.globalError.message.startsWith(field)) {
+        @form.globalError.message match {
+            case "email.empty" => {<span class="help-block">Email must not be empty.</span>}
+            case "name.empty" => {<span class="help-block">Name must not be empty.</span>}
+            case "password.empty" => {<span class="help-block">Password must not be empty.</span>}
+            case "email.used" => {<span class="help-block">This email is already being used.</span>}
+            case "password.match" => {<span class="help-block">The passwords do not match.</span>}
+        }
+    }
+}
+
+@main("Register") {
+    @helper.form(routes.SessionController.register, 'class -> "form-horizontal") {
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <h3>Register</h3>
+                    </div>
+                </div>
+
+                <div class='form-group @formError(form, "email")'>
+                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input id="email" type="email" class="form-control" name="email" placeholder="Email" value='@form("email").value'>
+                        @formErrorText(form, "email")
+                    </div>
+                </div>
+                <div class='form-group @formError(form, "name")'>
+                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input id="name" type="name" class="form-control" name="name" placeholder="Name" value='@form("name").value'>
+                        @formErrorText(form, "name")
+                    </div>
+                </div>
+                <div class='form-group @formError(form, "password")'>
+                    <label for="password1" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input id="password1" type="password" class="form-control" name="password1" placeholder="Password">
+                        @formErrorText(form, "password")
+                    </div>
+                </div>
+                <div class='form-group @formError(form, "password")'>
+                    <label for="password2" class="col-sm-2 control-label">Repeat</label>
+                    <div class="col-sm-10">
+                        <input id="password2" type="password" class="form-control" name="password2" placeholder="Repeat Password">
+                        @formErrorText(form, "password")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                        <span class="pull-right"><a class="btn btn-warning" href="@routes.SessionController.login()">Back</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

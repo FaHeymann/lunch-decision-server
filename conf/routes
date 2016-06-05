@@ -1,0 +1,22 @@
+# Api
+GET     /api/v1/current                           controllers.ApiController.current
+GET     /api/v1/all                               controllers.ApiController.all
+POST    /api/v1/veto/:mealId                      controllers.ApiController.veto(mealId: Int)
+
+# Session
+GET     /login                      controllers.SessionController.login()
+POST    /login                      controllers.SessionController.authenticate()
+GET     /register                   controllers.SessionController.registrationForm()
+POST    /register                   controllers.SessionController.register()
+GET     /logout                     controllers.SessionController.logout()
+
+# Decks
+GET     /meals                      controllers.MealController.list()
+GET     /meals/create               controllers.MealController.create()
+GET     /meals/:mealId              controllers.MealController.detail(mealId: Integer)
+GET     /meals/edit/:mealId         controllers.MealController.edit(mealId: Integer)
+POST    /meals/create               controllers.MealController.save()
+POST    /meals/edit                 controllers.MealController.saveEdit()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,0 +1,58 @@
+@(form: Form[MealController.MealData])
+
+@main("Edit meal") {
+    @helper.form(routes.MealController.saveEdit(), 'class -> "form-horizontal") {
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <h3>Edit Meal</h3>
+
+                        @if(form.hasGlobalErrors) {
+                        <p class="error">
+                            @form.globalError.message
+                        </p>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input id="name" type="text" class="form-control" name="name" placeholder="Name" value='@form("name").value'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea id="description" class="form-control" rows="3" name="description" placeholder="Description">@form("description").value</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image" class="col-sm-2 control-label">Image</label>
+                    <div class="col-sm-10">
+                        <input id="image" type="text" class="form-control" name="image" placeholder="Image" value='@form("image").value'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="currentPriority" class="col-sm-2 control-label">Current Priority</label>
+                    <div class="col-sm-10">
+                        <input id="currentPriority" type="text" class="form-control" name="currentPriority" placeholder="Current Priority" value='@form("currentPriority").value'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="priorityGain" class="col-sm-2 control-label">Priority Gain</label>
+                    <div class="col-sm-10">
+                        <input id="priorityGain" type="text" class="form-control" name="priorityGain" placeholder="Priority Gain" value='@form("priorityGain").value'>
+                    </div>
+                </div>
+                <input type="hidden" name="id" value='@form.data().get("id")' />
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button class="btn btn-primary" type="submit">Save meal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
