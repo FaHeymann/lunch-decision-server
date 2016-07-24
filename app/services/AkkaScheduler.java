@@ -2,7 +2,7 @@ package services;
 
 import javax.inject.*;
 
-import actors.PushNotificationActorProtocol;
+import actors.CleanUpActorProtocol;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import org.joda.time.DateTime;
@@ -15,18 +15,21 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 public class AkkaScheduler {
 
-    @Inject
-    @Named("push-notification-actor")
-    ActorRef pushNotificationActor;
+//    ActorRef pushNotificationActor;
+
+    ActorRef cleanUpActor;
 
     @Inject
-    public AkkaScheduler(ActorSystem system) {
+    public AkkaScheduler(ActorSystem system, @Named("clean-up-actor") ActorRef cleanUpActor) {
         Logger.info("Started cron");
+
+        this.cleanUpActor = cleanUpActor;
+
         system.scheduler().schedule(
-            Duration.create(this.nextExecutionInSeconds(1, 0), TimeUnit.SECONDS),
+            Duration.create(this.nextExecutionInSeconds(16, 30), TimeUnit.SECONDS),
             Duration.create(24, TimeUnit.HOURS),
-            this.pushNotificationActor,
-            new PushNotificationActorProtocol.Notification("Test", "test"),
+            this.cleanUpActor,
+            new CleanUpActorProtocol.CleanUp(),
             system.dispatcher(),
             null
         );

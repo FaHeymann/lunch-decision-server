@@ -15,7 +15,7 @@ public class User extends Model {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique=true)
+    @Column(unique = true)
     @NotNull
     private String email;
 
@@ -25,10 +25,25 @@ public class User extends Model {
     @NotNull
     private String password;
 
+    @Column(unique = true)
+    @NotNull
+    private String apiToken;
+
+    @NotNull
+    private boolean vetod;
+
+    @NotNull
+    private boolean admin;
+
     public User(String email, String name, String password) {
+        super();
+
         this.email = email;
         this.name = name;
         this.setPassword(password);
+        this.setApiToken(PasswordHelper.generateToken());
+        this.setVetod(false);
+        this.setAdmin(false);
     }
 
     public Integer getId() {
@@ -67,10 +82,34 @@ public class User extends Model {
         }
     }
 
-    public static User authenticate(String email, String password) {
-        User user = find.where().eq("email", email).findUnique();
-        return PasswordHelper.checkPassword(password, user.password) ? user : null;
+    public String getApiToken() {
+        return apiToken;
     }
 
-    public static Finder<Integer, User> find = new Finder<Integer, User>(User.class);
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
+    }
+
+    public boolean hasVetod() {
+        return vetod;
+    }
+
+    public void setVetod(boolean vetod) {
+        this.vetod = vetod;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public static User authenticate(String email, String password) {
+        User user = find.where().eq("email", email).findUnique();
+        return user == null ? null : PasswordHelper.checkPassword(password, user.password) ? user : null;
+    }
+
+    public static Finder<Integer, User> find = new Finder<>(User.class);
 }

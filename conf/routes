@@ -1,7 +1,7 @@
 # Api
-GET     /api/v1/current                           controllers.ApiController.current
-GET     /api/v1/all                               controllers.ApiController.all
-POST    /api/v1/veto/:mealId                      controllers.ApiController.veto(mealId: Int)
+GET     /api/v1/current             controllers.ApiController.current
+GET     /api/v1/all                 controllers.ApiController.all
+POST    /api/v1/veto/:mealId        controllers.ApiController.veto(mealId: Int)
 
 # Session
 GET     /login                      controllers.SessionController.login()
@@ -10,7 +10,13 @@ GET     /register                   controllers.SessionController.registrationFo
 POST    /register                   controllers.SessionController.register()
 GET     /logout                     controllers.SessionController.logout()
 
-# Decks
+#Profile
+GET     /profile                    controllers.ProfileController.index()
+POST    /profile/email              controllers.ProfileController.changeEmail()
+POST    /profile/password           controllers.ProfileController.changePassword()
+POST    /profile/token              controllers.ProfileController.changeToken()
+
+# Meals
 GET     /meals                      controllers.MealController.list()
 GET     /meals/create               controllers.MealController.create()
 GET     /meals/:mealId              controllers.MealController.detail(mealId: Integer)

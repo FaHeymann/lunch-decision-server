@@ -19,7 +19,11 @@ create table user (
   email                     varchar(255) not null,
   name                      varchar(255) not null,
   password                  varchar(255) not null,
+  api_token                 varchar(255) not null,
+  vetod                     tinyint(1) default 0 not null,
+  admin                     tinyint(1) default 0 not null,
   constraint uq_user_email unique (email),
+  constraint uq_user_api_token unique (api_token),
   constraint pk_user primary key (id))
 ;
 

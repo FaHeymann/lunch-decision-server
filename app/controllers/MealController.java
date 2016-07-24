@@ -2,8 +2,8 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import com.google.inject.Inject;
+import helpers.PasswordHelper;
 import models.Meal;
-import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
 import play.data.validation.Constraints;
@@ -27,12 +27,12 @@ public class MealController extends Controller {
         return ok(list.render(meals));
     }
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(AdminSecured.class)
     public Result create() {
         return ok(create.render(formFactory.form(MealData.class)));
     }
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(AdminSecured.class)
     public Result save() {
 
         Form<MealData> mealForm = formFactory.form(MealData.class).bindFromRequest();
@@ -51,7 +51,7 @@ public class MealController extends Controller {
         }
     }
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(AdminSecured.class)
     public Result edit(int mealId) {
         Meal meal = Meal.find.byId(mealId);
         Form<MealData> mealForm = formFactory.form(MealData.class);
@@ -64,7 +64,7 @@ public class MealController extends Controller {
         return ok(edit.render(mealForm));
     }
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(AdminSecured.class)
     public Result saveEdit() {
         Form<MealData> mealForm = formFactory.form(MealData.class).bindFromRequest();
         if (mealForm.hasErrors()) {

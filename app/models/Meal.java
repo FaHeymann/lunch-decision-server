@@ -89,5 +89,5 @@ public class Meal {
         this.vetod = vetod;
     }
 
-    public static Model.Finder<Integer, Meal> find = new Model.Finder<Integer, Meal>(Meal.class);
+    public static Model.Finder<Integer, Meal> find = new Model.Finder<>(Meal.class);
 }

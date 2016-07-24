@@ -2,7 +2,9 @@ package helpers;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class PasswordHelper {
     /**
@@ -23,9 +25,11 @@ public class PasswordHelper {
      * @return whether the passwords match
      */
     public static boolean checkPassword(String candidate, String encryptedPassword) {
-        if(null == candidate || null == encryptedPassword) {
-            return false;
-        }
-        return BCrypt.checkpw(candidate, encryptedPassword);
+        return !(null == candidate || null == encryptedPassword) && BCrypt.checkpw(candidate, encryptedPassword);
+    }
+
+    public static String generateToken() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
     }
 }
